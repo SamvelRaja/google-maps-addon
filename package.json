@@ -1,6 +1,6 @@
 {
   "name": "google-maps-addon",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "A thin wrapper around the Google Maps API",
   "directories": {
     "doc": "doc",
@@ -15,6 +15,7 @@
   "engines": {
     "node": ">= 0.10.0"
   },
+  "repository": "https://github.com/SamvelRaja/google-maps-addon.git",
   "author": "SamvelRaja",
   "license": "MIT",
   "devDependencies": {
