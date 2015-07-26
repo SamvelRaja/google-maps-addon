@@ -1,6 +1,6 @@
 {
   "name": "google-maps-addon",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A thin wrapper around the Google Maps API",
   "directories": {
     "doc": "doc",
@@ -35,7 +35,8 @@
   },
   "keywords": [
     "ember-addon",
-    "google-map-wrapper"
+    "google-maps-wrapper",
+    "google-maps-ember-addon"
   ],
   "dependencies": {
     "ember-cli-babel": "^5.0.0"

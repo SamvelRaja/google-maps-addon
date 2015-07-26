@@ -12,6 +12,7 @@ export default Ember.Component.extend({
       //Setting up the map_element in the context
       if(map_element){
         this.set('map_element',map_element);
+        Helpers.initializeMouseEventCallbacks(this);
       }
     } else {
       //Assert it if the hero(googlemaps js) is unavail
