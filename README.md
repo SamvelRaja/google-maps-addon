@@ -20,8 +20,32 @@ That's it, Google maps addon ready to use.
 
 mapOptions is a object that with your, **latitude**,**longitude** and **zoom**
 
+```js
+mapOptions : {
+  latitude : 'your latitude',
+  longitude : 'your longitude',
+  zoom : 'prefered zooming',
+  //Mouse events
+  click : function (event){
+    //your code here
+  }
+}
+```
+Supported Mouse events
+
+```js
+  'click',
+  'dblclick',
+  'drag',
+  'dragend',
+  'dragstart',
+  'mousemove',
+  'mouseout',
+  'mouseover',
+  'rightclick'
+```
 Next update would be,
 
-Googlemaps events
+Loader support and few code enhancements
 
 For more information on using ember-cli, visit [http://www.ember-cli.com/](http://www.ember-cli.com/).
