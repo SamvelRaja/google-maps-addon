@@ -1,25 +1,27 @@
-# Google-maps-addon
+# google-maps-addon
 
-This README outlines the details of collaborating on this Ember addon.
+A thin wrapper around the googlemaps converting it as ember addon
 
-## Installation
+[![NPM](https://nodei.co/npm/google-maps-addon.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/google-maps-addon/)
 
-* `git clone` this repository
-* `npm install`
-* `bower install`
+Simple usages
 
-## Running
+```bash
+ember install google-maps-addon --save-dev
+```
 
-* `ember server`
-* Visit your app at http://localhost:4200.
+**--save-dev** for adding the addon automatically into you application package.json
 
-## Running Tests
+That's it, Google maps addon ready to use.
 
-* `ember test`
-* `ember test --server`
+```hbs
+{{google-maps-addon MapOptions=mapOptions}}
+```
 
-## Building
+mapOptions is a object that with your, **latitude**,**longitude** and **zoom**
 
-* `ember build`
+Next update would be,
+
+Googlemaps events
 
 For more information on using ember-cli, visit [http://www.ember-cli.com/](http://www.ember-cli.com/).
