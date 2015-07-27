@@ -1,3 +1,4 @@
+import Ember from 'ember';
 /**
 @var mouseEvents
 @type array
@@ -25,11 +26,15 @@ export default{
   **/
   initializeOptions : function(context) {
     let map_options = context.get('MapOptions');
+    let marker_options = map_options.marker;
     context.setProperties({
       latitude : map_options.latitude || '0',
       longitude : map_options.longitude || '0',
-      zoom : map_options.zoom || 8
+      zoom : map_options.zoom || 8,
     });
+    if( typeof marker_options === 'object' && !Ember.isEmpty(marker_options)){
+      context.set('markerOptions', marker_options);
+    }
   },
   /**
   @method initializeMouseEventCallbacks
@@ -47,6 +52,25 @@ export default{
         }
       }
     });
+  },
+  /**
+  @method drawMarker
+  @param context
+  @usage
+    To draw the `marker` to the `map_element`
+  **/
+  drawMarker : function(context) {
+    let marker_options = context.get('markerOptions');
+    var map_element = context.get('map_element');
+    let latitude = marker_options.latitude || context.get('latitude');
+    let longitude = marker_options.longitude || context.get('longitude');
+    var myLatlng = new google.maps.LatLng(latitude,longitude);
+    var marker = new google.maps.Marker({
+      position: myLatlng,
+      map: map_element,
+      title: marker_options.title || ''
+    });
+    context.set('marker_obj',marker);
   },
   /**
   @method createMapElement

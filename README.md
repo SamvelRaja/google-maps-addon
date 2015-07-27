@@ -1,6 +1,6 @@
 # google-maps-addon
 
-A thin wrapper around the googlemaps converting it as ember addon
+A thin wrapper around the googlemaps to make it as a ready to use ember addon
 
 [![NPM](https://nodei.co/npm/google-maps-addon.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/google-maps-addon/)
 
@@ -18,15 +18,22 @@ That's it, Google maps addon ready to use.
 {{google-maps-addon MapOptions=mapOptions}}
 ```
 
-mapOptions is a object that with your, **latitude**,**longitude** and **zoom**
+We have the **JSON** **mapOptions** the simple way to have your configurations.
+
 
 ```js
 mapOptions : {
-  latitude : 'your latitude',
-  longitude : 'your longitude',
-  zoom : 'prefered zooming',
+  latitude : 'Your latitude',
+  longitude : 'Your longitude',
+  zoom : 'Your prefered zooming level',
+  marker : {
+    latitude : 'Your marker latitude if empty will takes up the center latitude',
+    longitude : 'Your marker longitude if empty will takes up the center longitude',
+    title : 'Your title, if not provided it takes up as empty string'
+  }
   //Mouse events
   click : function (event){
+    //I promise a callback is assured for the particular event
     //your code here
   }
 }
@@ -46,6 +53,6 @@ Supported Mouse events
 ```
 Next update would be,
 
-Loader support and few code enhancements
+More Markers support (Multiple markers, Marker events, Custom marker image)
 
 For more information on using ember-cli, visit [http://www.ember-cli.com/](http://www.ember-cli.com/).

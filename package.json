@@ -1,6 +1,6 @@
 {
   "name": "google-maps-addon",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "A thin wrapper around the Google Maps API",
   "directories": {
     "doc": "doc",

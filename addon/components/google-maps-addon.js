@@ -13,6 +13,9 @@ export default Ember.Component.extend({
       if(map_element){
         this.set('map_element',map_element);
         Helpers.initializeMouseEventCallbacks(this);
+        if(this.get('markerOptions')){
+          Helpers.drawMarker(this);
+        }
       }
     } else {
       //Assert it if the hero(googlemaps js) is unavail
