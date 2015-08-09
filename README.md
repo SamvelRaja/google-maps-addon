@@ -1,6 +1,6 @@
 # google-maps-addon
 
-##An Ember Addon
+#An Ember Addon
 
 Google maps [ember addon](http://www.emberaddons.com/) easy to consume.
 
@@ -96,6 +96,9 @@ mapOptions : {
   'rightclick'
 ```
 Feel free to raise an issue or feature request.
+
+**DEMO**
+![google-maps-addon](https://raw.githubusercontent.com/SamvelRaja/google-maps-addon/master/demo/google-maps-addon.gif)
 
 Next update would be,
 
