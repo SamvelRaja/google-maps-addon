@@ -1,11 +1,11 @@
 import Ember from 'ember';
 /**
-@var mouseEvents
+@let mouseEvents
 @type array
 Supported mouse events by googlemaps
   ref 'https://developers.google.com/maps/documentation/javascript/reference#events_50'
 **/
-var mouseEvents = [
+let mouseEvents = [
   'click',
   'dblclick',
   'drag',
@@ -82,14 +82,20 @@ export default{
     var map_element = context.get('map_element');
     let latitude = marker_options.latitude || context.get('latitude');
     let longitude = marker_options.longitude || context.get('longitude');
+    let animationIndex = google.maps.Animation[marker_options.animation] || null;
+    let timeout = marker_options.timeout || 0;
+    var self = this;
     var myLatlng = new google.maps.LatLng(latitude,longitude);
-    var marker = new google.maps.Marker({
-      position: myLatlng,
-      map: map_element,
-      title: marker_options.title || ''
-    });
-    context.set('marker_obj',marker);
-    this.initializeMarkerMouseEventCallbacks(context);
+    window.setTimeout(function() {
+      var marker = new google.maps.Marker({
+        position: myLatlng,
+        animation: animationIndex,
+        map: map_element,
+        title: marker_options.title || ''
+      });
+      context.set('marker_obj',marker);
+      self.initializeMarkerMouseEventCallbacks(context);
+    }, timeout);
   },
   /**
   @method initializeMarkerMouseEventCallbacks
@@ -108,6 +114,18 @@ export default{
         }
       }
     });
+    context.set('marker_obj',marker);
+  },
+  /**
+  @method clearMarker
+  @param context
+  @usage
+    To clear the Marker from the map.
+    Have to find a way to hook this function
+  **/
+  clearMarker : function(context) {
+    var marker = context.get('marker_obj');
+    marker.setMap(null);
     context.set('marker_obj',marker);
   },
 };
