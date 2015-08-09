@@ -26,13 +26,14 @@ export default{
   **/
   initializeOptions : function(context) {
     let map_options = context.get('MapOptions');
-    let marker_options = map_options.marker;
+    //First preference is to 'markers' array over the 'marker' object
+    let marker_options =  map_options.markers || map_options.marker;
     context.setProperties({
       latitude : map_options.latitude || '0',
       longitude : map_options.longitude || '0',
       zoom : map_options.zoom || 8,
     });
-    if( typeof marker_options === 'object' && !Ember.isEmpty(marker_options)){
+    if( (marker_options instanceof Array  || marker_options instanceof Object) && !Ember.isEmpty(marker_options)){
       context.set('markerOptions', marker_options);
     }
   },
@@ -72,43 +73,55 @@ export default{
     });
   },
   /**
-  @method drawMarker
+  @method drawAllMarkers
   @param context
+  @usage
+    To draw the `markers` to the `map_element`
+  **/
+  drawAllMarkers : function(context) {
+    var marker_options = context.get('markerOptions');
+    var markers = [];
+    var self = this;
+    for(let i=0;i<marker_options.length;i++){
+      markers[i] = self.drawMarker(context,marker_options[i]);
+    }
+    context.set('markers',markers);
+  },
+  /**
+  @method drawMarker
+  @param context,marker_options
   @usage
     To draw the `marker` to the `map_element`
   **/
-  drawMarker : function(context) {
-    let marker_options = context.get('markerOptions');
+  drawMarker : function(context,marker_options) {
     var map_element = context.get('map_element');
     let latitude = marker_options.latitude || context.get('latitude');
     let longitude = marker_options.longitude || context.get('longitude');
     let animationIndex = google.maps.Animation[marker_options.animation] || null;
-    let image_path = marker_options.icon || '//mt.googleapis.com/vt/icon/name=icons/spotlight/spotlight-poi.png&scale=1';
     let timeout = marker_options.timeout || 0;
+    let image_path = marker_options.icon || '//mt.googleapis.com/vt/icon/name=icons/spotlight/spotlight-poi.png&scale=1';
     var self = this;
     var myLatlng = new google.maps.LatLng(latitude,longitude);
+    var marker;
     window.setTimeout(function() {
-      var marker = new google.maps.Marker({
+     marker = new google.maps.Marker({
         position: myLatlng,
         animation: animationIndex,
         map: map_element,
         title: marker_options.title || '',
         icon : image_path
       });
-      context.set('marker_obj',marker);
-      self.initializeMarkerMouseEventCallbacks(context);
+      marker = self.initializeMarkerMouseEventCallbacks(context,marker,marker_options);
+      return marker;
     }, timeout);
   },
   /**
   @method initializeMarkerMouseEventCallbacks
-  @param context
+  @param context,marker,marker_options
   @usage
     To initialize the `markermouseevents` to the `marker_obj`
   **/
-  initializeMarkerMouseEventCallbacks : function(context) {
-    let marker_options = context.get('markerOptions');
-    //This needs to be changed as array for the multiple marker support
-    var marker = context.get('marker_obj');
+  initializeMarkerMouseEventCallbacks : function(context,marker,marker_options) {
     mouseEvents.forEach(function(event) {
       if(marker_options[event]){
         if(typeof marker_options[event] === 'function'){
@@ -116,18 +129,35 @@ export default{
         }
       }
     });
-    context.set('marker_obj',marker);
+    return marker;
+  },
+
+  /**
+  @method clearAllMarkers
+  @param context
+  @usage
+    To clear All the Markers from the map.
+    Have to find a way to hook this function
+  **/
+  clearAllMarkers : function(context) {
+    var markers = context.get('markers');
+    if(markers instanceof Array){
+      for(let i=0;i<markers.length;i++){
+        markers[i]=this.clearMarker(markers[i]);
+      }
+    } else {
+      markers = this.clearMarker(markers);
+    }
+    context.set('markers',markers);
   },
   /**
   @method clearMarker
-  @param context
+  @param marker
   @usage
     To clear the Marker from the map.
     Have to find a way to hook this function
   **/
-  clearMarker : function(context) {
-    var marker = context.get('marker_obj');
+  clearMarker : function(marker) {
     marker.setMap(null);
-    context.set('marker_obj',marker);
   },
 };

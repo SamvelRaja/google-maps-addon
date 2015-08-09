@@ -12,9 +12,14 @@ export default Ember.Component.extend({
       //Setting up the map_element in the context
       if(map_element){
         this.set('map_element',map_element);
+        let marker_options = this.get('markerOptions');
         Helpers.initializeMouseEventCallbacks(this);
-        if(this.get('markerOptions')){
-          Helpers.drawMarker(this);
+        if(marker_options){
+          if(marker_options instanceof Array ){
+            Helpers.drawAllMarkers(this);
+          } else {
+            Helpers.drawMarker(this,marker_options);
+          }
         }
       }
     } else {
