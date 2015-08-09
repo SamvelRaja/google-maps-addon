@@ -37,6 +37,24 @@ export default{
     }
   },
   /**
+  @method createMapElement
+  @param context
+  @usage
+    To create a map element using mapOptions
+    It creates the map element in the $(div.map-canvas)
+  @return map (google map element for other handlings)
+  **/
+  createMapElement : function(context) {
+    let mapOptions = {
+        center: new google.maps.LatLng(context.get('latitude'), context.get('longitude')),
+        zoom: context.get('zoom'),
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+    var map_element = context.$('div.map-canvas')[0];
+    var map = new google.maps.Map(map_element, mapOptions);
+    return map;
+  },
+  /**
   @method initializeMouseEventCallbacks
   @param context
   @usage
@@ -71,23 +89,25 @@ export default{
       title: marker_options.title || ''
     });
     context.set('marker_obj',marker);
+    this.initializeMarkerMouseEventCallbacks(context);
   },
   /**
-  @method createMapElement
+  @method initializeMarkerMouseEventCallbacks
   @param context
   @usage
-    To create a map element using mapOptions
-    It creates the map element in the $(div.map-canvas)
-  @return map (google map element for other handlings)
+    To initialize the `markermouseevents` to the `marker_obj`
   **/
-  createMapElement : function(context) {
-    let mapOptions = {
-        center: new google.maps.LatLng(context.get('latitude'), context.get('longitude')),
-        zoom: context.get('zoom'),
-        mapTypeId: google.maps.MapTypeId.ROADMAP
-    };
-    var map_element = context.$('div.map-canvas')[0];
-    var map = new google.maps.Map(map_element, mapOptions);
-    return map;
-  }
+  initializeMarkerMouseEventCallbacks : function(context) {
+    let marker_options = context.get('markerOptions');
+    //This needs to be changed as array for the multiple marker support
+    var marker = context.get('marker_obj');
+    mouseEvents.forEach(function(event) {
+      if(marker_options[event]){
+        if(typeof marker_options[event] === 'function'){
+          google.maps.event.addListener(marker, event, marker_options[event]);
+        }
+      }
+    });
+    context.set('marker_obj',marker);
+  },
 };
