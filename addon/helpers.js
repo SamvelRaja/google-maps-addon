@@ -83,6 +83,7 @@ export default{
     let latitude = marker_options.latitude || context.get('latitude');
     let longitude = marker_options.longitude || context.get('longitude');
     let animationIndex = google.maps.Animation[marker_options.animation] || null;
+    let image_path = marker_options.icon || '//mt.googleapis.com/vt/icon/name=icons/spotlight/spotlight-poi.png&scale=1';
     let timeout = marker_options.timeout || 0;
     var self = this;
     var myLatlng = new google.maps.LatLng(latitude,longitude);
@@ -91,7 +92,8 @@ export default{
         position: myLatlng,
         animation: animationIndex,
         map: map_element,
-        title: marker_options.title || ''
+        title: marker_options.title || '',
+        icon : image_path
       });
       context.set('marker_obj',marker);
       self.initializeMarkerMouseEventCallbacks(context);
