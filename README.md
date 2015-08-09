@@ -2,7 +2,7 @@
 
 ##An Ember Addon
 
-A thin wrapper around the google maps to make it as a ready to use [ember addon](http://www.emberaddons.com/)
+Google maps [ember addon](http://www.emberaddons.com/) easy to consume.
 
 [![NPM](https://nodei.co/npm/google-maps-addon.png)](https://nodei.co/npm/google-maps-addon/)
 
@@ -33,6 +33,8 @@ mapOptions : {
     //I promise a callback is assured for the particular event so
     //have your code here
   },
+  //If you have single marker then can use this,
+  //prefer to use markers option even for single marker
   marker : {
     latitude : 'Your marker latitude if empty will takes up the center latitude',
     longitude : 'Your marker longitude if empty will takes up the center longitude',
@@ -45,11 +47,42 @@ mapOptions : {
       //I promise a callback is assured for the particular event so
       //have your code here
     }
-  }
+  },
+  //Multiple markers are supported by
+  markers : [
+    {
+      latitude : 'Your marker latitude if empty will takes up the center latitude',
+      longitude : 'Your marker longitude if empty will takes up the center longitude',
+      title : 'Your title, if not provided it takes up as empty string',
+      animation : 'DROP' || 'BOUNCE',
+      timeout : timeout after the window loads,
+      icon : 'Specify the path of the icon',
+      //Mouse events
+      click : function (event){
+        //I promise a callback is assured for the particular event so
+        //have your code here
+      }
+    },
+    {
+      latitude : 'Your marker latitude if empty will takes up the center latitude',
+      longitude : 'Your marker longitude if empty will takes up the center longitude',
+      title : 'Your title, if not provided it takes up as empty string',
+      animation : 'DROP' || 'BOUNCE',
+      timeout : timeout after the window loads,
+      icon : 'Specify the path of the icon',
+      //Mouse events
+      click : function (event){
+        //I promise a callback is assured for the particular event so
+        //have your code here
+      }
+    }
+  ]
 
 }
 ```
-Supported Mouse events
+**NOTE** markers has more priority than marker
+
+**Supported Mouse events**
 
 ```js
   'click',
@@ -62,11 +95,11 @@ Supported Mouse events
   'mouseover',
   'rightclick'
 ```
-Feel free to raise a issue or feature request.
+Feel free to raise an issue or feature request.
 
 Next update would be,
 
-More Markers support (Multiple markers)
+More Markers support (Dragable marker,info window)
 
 Need more interactions back into the component than getting out of component
 
