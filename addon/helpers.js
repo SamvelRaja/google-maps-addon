@@ -100,6 +100,7 @@ export default{
     let animationIndex = google.maps.Animation[marker_options.animation] || null;
     let timeout = marker_options.timeout || 0;
     let image_path = marker_options.icon || '//mt.googleapis.com/vt/icon/name=icons/spotlight/spotlight-poi.png&scale=1';
+    let draggable = marker_options.draggable || false;
     var self = this;
     var myLatlng = new google.maps.LatLng(latitude,longitude);
     var marker;
@@ -108,6 +109,7 @@ export default{
         position: myLatlng,
         animation: animationIndex,
         map: map_element,
+        draggable: draggable,
         title: marker_options.title || '',
         icon : image_path
       });
