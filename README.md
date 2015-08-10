@@ -42,6 +42,7 @@ mapOptions : {
       animation : 'DROP' || 'BOUNCE',
       timeout : timeout after the window loads,
       icon : 'Specify the path of the icon',
+      draggable:true,
       //Mouse events
       click : function (event){
         //I promise a callback is assured for the particular event so
@@ -55,6 +56,7 @@ mapOptions : {
       animation : 'DROP' || 'BOUNCE',
       timeout : timeout after the window loads,
       icon : 'Specify the path of the icon',
+      draggable:true,
       //Mouse events
       click : function (event){
         //I promise a callback is assured for the particular event so
