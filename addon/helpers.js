@@ -27,13 +27,13 @@ export default{
   initializeOptions : function(context) {
     let map_options = context.get('MapOptions');
     //First preference is to 'markers' array over the 'marker' object
-    let marker_options =  map_options.markers || map_options.marker;
+    let marker_options =  map_options.markers;
     context.setProperties({
       latitude : map_options.latitude || '0',
       longitude : map_options.longitude || '0',
       zoom : map_options.zoom || 8,
     });
-    if( (marker_options instanceof Array  || marker_options instanceof Object) && !Ember.isEmpty(marker_options)){
+    if( marker_options instanceof Array  && !Ember.isEmpty(marker_options)){
       context.set('markerOptions', marker_options);
     }
   },

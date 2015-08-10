@@ -15,11 +15,7 @@ export default Ember.Component.extend({
         let marker_options = this.get('markerOptions');
         Helpers.initializeMouseEventCallbacks(this);
         if(marker_options){
-          if(marker_options instanceof Array ){
-            Helpers.drawAllMarkers(this);
-          } else {
-            Helpers.drawMarker(this,marker_options);
-          }
+          Helpers.drawAllMarkers(this);
         }
       }
     } else {

@@ -33,22 +33,7 @@ mapOptions : {
     //I promise a callback is assured for the particular event so
     //have your code here
   },
-  //If you have single marker then can use this,
-  //prefer to use markers option even for single marker
-  marker : {
-    latitude : 'Your marker latitude if empty will takes up the center latitude',
-    longitude : 'Your marker longitude if empty will takes up the center longitude',
-    title : 'Your title, if not provided it takes up as empty string',
-    animation : 'DROP' || 'BOUNCE',
-    timeout : timeout after the window loads,
-    icon : 'Specify the path of the icon',
-    //Mouse events
-    click : function (event){
-      //I promise a callback is assured for the particular event so
-      //have your code here
-    }
-  },
-  //Multiple markers are supported by
+  //markers array
   markers : [
     {
       latitude : 'Your marker latitude if empty will takes up the center latitude',
@@ -80,7 +65,6 @@ mapOptions : {
 
 }
 ```
-**NOTE** markers has more priority than marker
 
 **Supported Mouse events**
 
@@ -98,6 +82,7 @@ mapOptions : {
 Feel free to raise an issue or feature request.
 
 **DEMO**
+
 ![google-maps-addon](https://raw.githubusercontent.com/SamvelRaja/google-maps-addon/master/demo/google-maps-addon.gif)
 
 Next update would be,
