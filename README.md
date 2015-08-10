@@ -63,7 +63,13 @@ mapOptions : {
         //have your code here
       }
     }
-  ]
+  ],
+  //infowindow will be default open.
+  infowindow : {
+    content : 'Your HTML content here',
+    latitude : 'Your infowindow latitude if empty will takes up the center latitude',
+    longitude : 'Your infowindow longitude if empty will takes up the center longitude',
+  }
 
 }
 ```
@@ -89,7 +95,7 @@ Feel free to raise an issue or feature request.
 
 Next update would be,
 
-More Markers support (Dragable marker,info window)
+More info window support (events, adding it to markers)
 
 Need more interactions back into the component than getting out of component
 

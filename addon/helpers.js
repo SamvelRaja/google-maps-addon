@@ -117,6 +117,7 @@ export default{
       return marker;
     }, timeout);
   },
+
   /**
   @method initializeMarkerMouseEventCallbacks
   @param context,marker,marker_options
@@ -132,6 +133,30 @@ export default{
       }
     });
     return marker;
+  },
+  /**
+  @method initializeInfowindow
+  @param context
+  @usage
+    To create and the info window
+  **/
+  initializeInfowindow : function(context) {
+      var map_element = context.get('map_element');
+      let map_options = context.get('MapOptions');
+      let info_window_options = map_options.infowindow;
+      let longitude = info_window_options.longitude || context.get('longitude');
+      let latitude = info_window_options.latitude || context.get('latitude');
+      let info_postion = new google.maps.LatLng(latitude,longitude);
+      if(info_window_options){
+        if(info_window_options instanceof Object && !(info_window_options instanceof Array)){
+          var infoWindow = new google.maps.InfoWindow()
+          infoWindow.setOptions({
+            content: info_window_options.content || 'empty content',
+          });
+          infoWindow.setPosition(info_postion);
+          infoWindow.open(map_element);
+        }
+      }
   },
 
   /**
