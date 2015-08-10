@@ -17,6 +17,7 @@ export default Ember.Component.extend({
         if(marker_options){
           Helpers.drawAllMarkers(this);
         }
+        Helpers.initializeInfowindow(this);
       }
     } else {
       //Assert it if the hero(googlemaps js) is unavail
