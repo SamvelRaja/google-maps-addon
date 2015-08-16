@@ -149,11 +149,12 @@ export default{
       let info_postion = new google.maps.LatLng(latitude,longitude);
       if(info_window_options){
         if(info_window_options instanceof Object && !(info_window_options instanceof Array)){
-          var infoWindow = new google.maps.InfoWindow()
-          infoWindow.setOptions({
+          var infoWindow = new google.maps.InfoWindow({
             content: info_window_options.content || 'empty content',
+            position : info_postion,
+            pixelOffset: info_window_options.pixelOffset || undefined,
+            maxWidth: info_window_options.maxWidth || undefined
           });
-          infoWindow.setPosition(info_postion);
           infoWindow.open(map_element);
         }
       }
