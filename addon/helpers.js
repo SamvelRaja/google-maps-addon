@@ -31,9 +31,9 @@ export default{
     context.setProperties({
       latitude : map_options.latitude || '0',
       longitude : map_options.longitude || '0',
-      zoom : map_options.zoom || 8,
+      zoom : map_options.zoom || 8
     });
-    if( marker_options instanceof Array  && !Ember.isEmpty(marker_options)){
+    if ( marker_options instanceof Array  && !Ember.isEmpty(marker_options)) {
       context.set('markerOptions', marker_options);
     }
   },
@@ -47,9 +47,9 @@ export default{
   **/
   createMapElement : function(context) {
     let mapOptions = {
-        center: new google.maps.LatLng(context.get('latitude'), context.get('longitude')),
-        zoom: context.get('zoom'),
-        mapTypeId: google.maps.MapTypeId.ROADMAP
+      center: new google.maps.LatLng(context.get('latitude'), context.get('longitude')),
+      zoom: context.get('zoom'),
+      mapTypeId: google.maps.MapTypeId.ROADMAP
     };
     var map_element = context.$('div.map-canvas')[0];
     var map = new google.maps.Map(map_element, mapOptions);
@@ -65,8 +65,8 @@ export default{
     let map_options = context.get('MapOptions');
     var map_element = context.get('map_element');
     mouseEvents.forEach(function(event) {
-      if(map_options[event]){
-        if(typeof map_options[event] === 'function'){
+      if (map_options[event]) {
+        if (typeof map_options[event] === 'function') {
           google.maps.event.addListener(map_element, event, map_options[event]);
         }
       }
@@ -82,10 +82,10 @@ export default{
     var marker_options = context.get('markerOptions');
     var markers = [];
     var self = this;
-    for(let i=0;i<marker_options.length;i++){
-      markers[i] = self.drawMarker(context,marker_options[i]);
+    for (let i=0;i<marker_options.length;i++) {
+      markers[i] = self.drawMarker(context, marker_options[i]);
     }
-    context.set('markers',markers);
+    context.set('markers', markers);
   },
   /**
   @method drawMarker
@@ -93,7 +93,7 @@ export default{
   @usage
     To draw the `marker` to the `map_element`
   **/
-  drawMarker : function(context,marker_options) {
+  drawMarker : function(context, marker_options) {
     var map_element = context.get('map_element');
     let latitude = marker_options.latitude || context.get('latitude');
     let longitude = marker_options.longitude || context.get('longitude');
@@ -105,7 +105,7 @@ export default{
     var myLatlng = new google.maps.LatLng(latitude,longitude);
     var marker;
     window.setTimeout(function() {
-     marker = new google.maps.Marker({
+      marker = new google.maps.Marker({
         position: myLatlng,
         animation: animationIndex,
         map: map_element,
@@ -113,7 +113,7 @@ export default{
         title: marker_options.title || '',
         icon : image_path
       });
-      marker = self.initializeMarkerMouseEventCallbacks(context,marker,marker_options);
+      marker = self.initializeMarkerMouseEventCallbacks(context, marker, marker_options);
       return marker;
     }, timeout);
   },
@@ -124,10 +124,10 @@ export default{
   @usage
     To initialize the `markermouseevents` to the `marker_obj`
   **/
-  initializeMarkerMouseEventCallbacks : function(context,marker,marker_options) {
+  initializeMarkerMouseEventCallbacks : function(context, marker, marker_options) {
     mouseEvents.forEach(function(event) {
-      if(marker_options[event]){
-        if(typeof marker_options[event] === 'function'){
+      if (marker_options[event]) {
+        if (typeof marker_options[event] === 'function') {
           google.maps.event.addListener(marker, event, marker_options[event]);
         }
       }
@@ -141,23 +141,23 @@ export default{
     To create and the info window
   **/
   initializeInfowindow : function(context) {
-      var map_element = context.get('map_element');
-      let map_options = context.get('MapOptions');
-      let info_window_options = map_options.infowindow;
-      let longitude = info_window_options.longitude || context.get('longitude');
-      let latitude = info_window_options.latitude || context.get('latitude');
-      let info_postion = new google.maps.LatLng(latitude,longitude);
-      if(info_window_options){
-        if(info_window_options instanceof Object && !(info_window_options instanceof Array)){
-          var infoWindow = new google.maps.InfoWindow({
-            content: info_window_options.content || 'empty content',
-            position : info_postion,
-            pixelOffset: info_window_options.pixelOffset || undefined,
-            maxWidth: info_window_options.maxWidth || undefined
-          });
-          infoWindow.open(map_element);
-        }
+    var map_element = context.get('map_element');
+    let map_options = context.get('MapOptions');
+    let info_window_options = map_options.infowindow;
+    let longitude = info_window_options.longitude || context.get('longitude');
+    let latitude = info_window_options.latitude || context.get('latitude');
+    let info_postion = new google.maps.LatLng(latitude,longitude);
+    if (info_window_options) {
+      if (info_window_options instanceof Object && !(info_window_options instanceof Array)) {
+        var infoWindow = new google.maps.InfoWindow({
+          content: info_window_options.content || 'empty content',
+          position : info_postion,
+          pixelOffset: info_window_options.pixelOffset || undefined,
+          maxWidth: info_window_options.maxWidth || undefined
+        });
+        infoWindow.open(map_element);
       }
+    }
   },
 
   /**
@@ -169,14 +169,14 @@ export default{
   **/
   clearAllMarkers : function(context) {
     var markers = context.get('markers');
-    if(markers instanceof Array){
-      for(let i=0;i<markers.length;i++){
+    if (markers instanceof Array) {
+      for (let i=0;i<markers.length;i++) {
         markers[i]=this.clearMarker(markers[i]);
       }
     } else {
       markers = this.clearMarker(markers);
     }
-    context.set('markers',markers);
+    context.set('markers', markers);
   },
   /**
   @method clearMarker
@@ -187,5 +187,5 @@ export default{
   **/
   clearMarker : function(marker) {
     marker.setMap(null);
-  },
+  }
 };
