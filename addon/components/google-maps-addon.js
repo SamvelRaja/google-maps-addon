@@ -20,8 +20,7 @@ export default Ember.Component.extend({
         Helpers.initializeInfowindow(this);
       }
     } else {
-      //Assert it if the hero(googlemaps js) is unavail
-      console.assert('Need to include the googlemaps js');
+      console.error('Need to include the googlemaps js');
     }
   }
 });
