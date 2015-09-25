@@ -144,10 +144,10 @@ export default{
     var map_element = context.get('map_element');
     let map_options = context.get('MapOptions');
     let info_window_options = map_options.infowindow;
-    let longitude = info_window_options.longitude || context.get('longitude');
-    let latitude = info_window_options.latitude || context.get('latitude');
-    let info_postion = new google.maps.LatLng(latitude,longitude);
     if (info_window_options) {
+      let longitude = info_window_options.longitude || context.get('longitude');
+      let latitude = info_window_options.latitude || context.get('latitude');
+      let info_postion = new google.maps.LatLng(latitude,longitude);
       if (info_window_options instanceof Object && !(info_window_options instanceof Array)) {
         var infoWindow = new google.maps.InfoWindow({
           content: info_window_options.content || 'empty content',
