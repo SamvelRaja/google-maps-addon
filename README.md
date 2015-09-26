@@ -101,4 +101,8 @@ More info window support (events, adding it to markers)
 
 Need more interactions back into the component than getting out of component
 
+#Contributions
+
+Contributions are welcome!
+
 For more information on using ember-cli, visit [http://www.ember-cli.com/](http://www.ember-cli.com/).
