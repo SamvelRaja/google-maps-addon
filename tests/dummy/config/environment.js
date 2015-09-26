@@ -6,6 +6,19 @@ module.exports = function(environment) {
     environment: environment,
     baseURL: '/',
     locationType: 'auto',
+    /*
+    Need to include this after a deep study
+    and should include "ember-cli-content-security-policy": "0.4.0", in package.json
+    contentSecurityPolicy: {
+      'default-src': "'none'",
+      'script-src': "'self' www.storage.googleapis.com www.maps.googleapis.com",
+      'font-src': "'self' www.fonts.googleapis.com www.maps.googleapis.com",
+      'connect-src': "'self'",
+      'img-src': "'self' www.gravatar.com www.maps.googleapis.com",
+      'style-src': "'self' www.fonts.googleapis.com www.storage.googleapis.com",
+      'media-src': "'self'"
+    },
+    */
     EmberENV: {
       FEATURES: {
         // Here you can enable experimental features on an ember canary build
