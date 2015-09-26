@@ -1,5 +1,11 @@
 ## Changes since 2013-06-01
 
+ * @SamvelRaja: Updated Readme for the build status tag (#18)
+ * @SamvelRaja: Patch add dummy app (#17)
+ * @erkie: Show a proper error message when googlemaps.js is not included (#15)
+ * @erkie: Fix crash when infoWindow was not present (#14)
+ * @SamvelRaja: Patch jscs added (#12)
+ * @SamvelRaja: Generated the changelog using the github-changelog-generator (#11)
  * @SamvelRaja: Patch info window enhanc1 (#10)
  * @SamvelRaja: Info window initial support :) (#9)
  * @SamvelRaja: Marker Enhancements (#8)
