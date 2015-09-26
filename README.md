@@ -70,7 +70,7 @@ mapOptions : {
     latitude : 'Your infowindow latitude if empty will takes up the center latitude',
     longitude : 'Your infowindow longitude if empty will takes up the center longitude',
     maxWidth : 'The maximum width of the infowindow' //in number
-    pixelOffset : 'The offset, in pixels, of the tip of the info window from the point on the map at whose geographical coordinates the info window is anchored. If an InfoWindow is opened with an anchor, the pixelOffset will be calculated from the anchors anchorPoint property. 
+    pixelOffset : 'The offset, in pixels, of the tip of the info window from the point on the map at whose geographical coordinates the info window is anchored. If an InfoWindow is opened with an anchor, the pixelOffset will be calculated from the anchors anchorPoint property.'
   }
 
 }
