@@ -1,20 +1,25 @@
 # google-maps-addon
 
-#An Ember Addon
-
-Google maps [ember addon](http://www.emberaddons.com/) easy to consume.
+[![Build Status](https://travis-ci.org/SamvelRaja/google-maps-addon.svg?branch=master)](https://travis-ci.org/SamvelRaja/google-maps-addon)
 
 [![NPM](https://nodei.co/npm/google-maps-addon.png)](https://nodei.co/npm/google-maps-addon/)
 
-Installation
+# An Ember Addon
 
-```bash
-ember install google-maps-addon --save-dev
-```
+Google maps [ember addon](http://www.emberaddons.com/) easy to consume.
 
-**--save-dev** for adding the addon automatically into you application package.json
 
-That's it, Google maps ember addon ready to use.
+## Installation
+
+* `ember install:addon google-maps-addon`
+
+
+## Running Tests
+
+* `ember test`
+* `ember test --server`
+
+## Usage
 
 ```hbs
 {{google-maps-addon MapOptions=mapOptions}}
@@ -89,20 +94,32 @@ mapOptions : {
   'mouseover',
   'rightclick'
 ```
+## Issue and Feature request
+
 Feel free to raise an issue or feature request.
 
-**DEMO**
+
+## Contributing
+
+1. [Fork it](https://github.com/SamvelRaja/google-maps-addon/fork)
+2. Create your feature branch (`git checkout -b my-new-feature`)
+3. Commit your changes (`git commit -am 'Add some feature'`)
+4. Push to the branch (`git push origin my-new-feature`)
+5. Create new Pull Request
+
+## DEMO
 
 ![google-maps-addon](https://raw.githubusercontent.com/SamvelRaja/google-maps-addon/master/demo/google-maps-addon.gif)
 
-Next update would be,
+
+## Next Planned update,
 
 More info window support (events, adding it to markers)
 
 Need more interactions back into the component than getting out of component
 
-#Contributions
+# License
 
-Contributions are welcome!
+Copyright (c) 2015 SamvelRaja
 
 For more information on using ember-cli, visit [http://www.ember-cli.com/](http://www.ember-cli.com/).
