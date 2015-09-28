@@ -120,6 +120,4 @@ Need more interactions back into the component than getting out of component
 
 # License
 
-Copyright (c) 2015 SamvelRaja
-
-For more information on using ember-cli, visit [http://www.ember-cli.com/](http://www.ember-cli.com/).
+google-maps-addon is [MIT Licensed](https://github.com/SamvelRaja/google-maps-addon/blob/master/LICENSE.md).
