@@ -22,19 +22,19 @@ export default{
   @method initializeOptions
   @param context
   @usage
-    To initialize the `MapOptions` as `context' properties`
+    To initialize the `mapOptions` as `context' properties`
   **/
   initializeOptions : function(context) {
-    let map_options = context.get('MapOptions');
+    let mapOptions = context.get('mapOptions') || context.get('MapOptions');
     //First preference is to 'markers' array over the 'marker' object
-    let marker_options =  map_options.markers;
+    let markerOptions =  mapOptions.markers;
     context.setProperties({
-      latitude : map_options.latitude || '0',
-      longitude : map_options.longitude || '0',
-      zoom : map_options.zoom || 8
+      latitude : mapOptions.latitude || '0',
+      longitude : mapOptions.longitude || '0',
+      zoom : mapOptions.zoom || 8
     });
-    if ( marker_options instanceof Array  && !Ember.isEmpty(marker_options)) {
-      context.set('markerOptions', marker_options);
+    if ( markerOptions instanceof Array  && !Ember.isEmpty(markerOptions)) {
+      context.set('markerOptions', markerOptions);
     }
   },
   /**
@@ -51,23 +51,23 @@ export default{
       zoom: context.get('zoom'),
       mapTypeId: google.maps.MapTypeId.ROADMAP
     };
-    var map_element = context.$('div.map-canvas')[0];
-    var map = new google.maps.Map(map_element, mapOptions);
+    var mapElement = context.$('div.map-canvas')[0];
+    var map = new google.maps.Map(mapElement, mapOptions);
     return map;
   },
   /**
   @method initializeMouseEventCallbacks
   @param context
   @usage
-    To initialize the `mouseevents` to the `map_element`
+    To initialize the `mouseevents` to the `mapElement`
   **/
   initializeMouseEventCallbacks : function(context) {
-    let map_options = context.get('MapOptions');
-    var map_element = context.get('map_element');
+    let mapOptions = context.get('mapOptions') || context.get('MapOptions');
+    var mapElement = context.get('mapElement');
     mouseEvents.forEach(function(event) {
-      if (map_options[event]) {
-        if (typeof map_options[event] === 'function') {
-          google.maps.event.addListener(map_element, event, map_options[event]);
+      if (mapOptions[event]) {
+        if (typeof mapOptions[event] === 'function') {
+          google.maps.event.addListener(mapElement, event, mapOptions[event]);
         }
       }
     });
@@ -76,31 +76,31 @@ export default{
   @method drawAllMarkers
   @param context
   @usage
-    To draw the `markers` to the `map_element`
+    To draw the `markers` to the `mapElement`
   **/
   drawAllMarkers : function(context) {
-    var marker_options = context.get('markerOptions');
+    var markerOptions = context.get('markerOptions');
     var markers = [];
     var self = this;
-    for (let i=0;i<marker_options.length;i++) {
-      markers[i] = self.drawMarker(context, marker_options[i]);
+    for (let i=0;i<markerOptions.length;i++) {
+      markers[i] = self.drawMarker(context, markerOptions[i]);
     }
     context.set('markers', markers);
   },
   /**
   @method drawMarker
-  @param context,marker_options
+  @param context,markerOptions
   @usage
-    To draw the `marker` to the `map_element`
+    To draw the `marker` to the `mapElement`
   **/
-  drawMarker : function(context, marker_options) {
-    var map_element = context.get('map_element');
-    let latitude = marker_options.latitude || context.get('latitude');
-    let longitude = marker_options.longitude || context.get('longitude');
-    let animationIndex = google.maps.Animation[marker_options.animation] || null;
-    let timeout = marker_options.timeout || 0;
-    let image_path = marker_options.icon || '//mt.googleapis.com/vt/icon/name=icons/spotlight/spotlight-poi.png&scale=1';
-    let draggable = marker_options.draggable || false;
+  drawMarker : function(context, markerOptions) {
+    var mapElement = context.get('mapElement');
+    let latitude = markerOptions.latitude || context.get('latitude');
+    let longitude = markerOptions.longitude || context.get('longitude');
+    let animationIndex = google.maps.Animation[markerOptions.animation] || null;
+    let timeout = markerOptions.timeout || 0;
+    let image_path = markerOptions.icon || '//mt.googleapis.com/vt/icon/name=icons/spotlight/spotlight-poi.png&scale=1';
+    let draggable = markerOptions.draggable || false;
     var self = this;
     var myLatlng = new google.maps.LatLng(latitude,longitude);
     var marker;
@@ -108,27 +108,27 @@ export default{
       marker = new google.maps.Marker({
         position: myLatlng,
         animation: animationIndex,
-        map: map_element,
+        map: mapElement,
         draggable: draggable,
-        title: marker_options.title || '',
+        title: markerOptions.title || '',
         icon : image_path
       });
-      marker = self.initializeMarkerMouseEventCallbacks(context, marker, marker_options);
+      marker = self.initializeMarkerMouseEventCallbacks(context, marker, markerOptions);
       return marker;
     }, timeout);
   },
 
   /**
   @method initializeMarkerMouseEventCallbacks
-  @param context,marker,marker_options
+  @param context,marker,markerOptions
   @usage
     To initialize the `markermouseevents` to the `marker_obj`
   **/
-  initializeMarkerMouseEventCallbacks : function(context, marker, marker_options) {
+  initializeMarkerMouseEventCallbacks : function(context, marker, markerOptions) {
     mouseEvents.forEach(function(event) {
-      if (marker_options[event]) {
-        if (typeof marker_options[event] === 'function') {
-          google.maps.event.addListener(marker, event, marker_options[event]);
+      if (markerOptions[event]) {
+        if (typeof markerOptions[event] === 'function') {
+          google.maps.event.addListener(marker, event, markerOptions[event]);
         }
       }
     });
@@ -141,21 +141,21 @@ export default{
     To create and the info window
   **/
   initializeInfowindow : function(context) {
-    var map_element = context.get('map_element');
-    let map_options = context.get('MapOptions');
-    let info_window_options = map_options.infowindow;
-    if (info_window_options) {
-      let longitude = info_window_options.longitude || context.get('longitude');
-      let latitude = info_window_options.latitude || context.get('latitude');
-      let info_postion = new google.maps.LatLng(latitude,longitude);
-      if (info_window_options instanceof Object && !(info_window_options instanceof Array)) {
+    var mapElement = context.get('mapElement');
+    let mapOptions = context.get('mapOptions') || context.get('MapOptions');
+    let infoWindowOptions = mapOptions.infowindow;
+    if (infoWindowOptions) {
+      let longitude = infoWindowOptions.longitude || context.get('longitude');
+      let latitude = infoWindowOptions.latitude || context.get('latitude');
+      let infoPostion = new google.maps.LatLng(latitude,longitude);
+      if (infoWindowOptions instanceof Object && !(infoWindowOptions instanceof Array)) {
         var infoWindow = new google.maps.InfoWindow({
-          content: info_window_options.content || 'empty content',
-          position : info_postion,
-          pixelOffset: info_window_options.pixelOffset || undefined,
-          maxWidth: info_window_options.maxWidth || undefined
+          content: infoWindowOptions.content || 'empty content',
+          position : infoPostion,
+          pixelOffset: infoWindowOptions.pixelOffset || undefined,
+          maxWidth: infoWindowOptions.maxWidth || undefined
         });
-        infoWindow.open(map_element);
+        infoWindow.open(mapElement);
       }
     }
   },

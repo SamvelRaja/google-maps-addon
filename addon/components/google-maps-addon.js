@@ -2,19 +2,19 @@ import Ember from 'ember';
 import Helpers from '../helpers';
 export default Ember.Component.extend({
   didInsertElement: function() {
-    var map_element;
+    var mapElement;
     //Initializing the options into the context
     Helpers.initializeOptions(this);
     //Checking for the availability of googlemaps js the hero
     if (window.google) {
-      map_element = Helpers.createMapElement(this);
+      mapElement = Helpers.createMapElement(this);
 
-      //Setting up the map_element in the context
-      if (map_element) {
-        this.set('map_element', map_element);
-        let marker_options = this.get('markerOptions');
+      //Setting up the mapElement in the context
+      if (mapElement) {
+        this.set('mapElement', mapElement);
+        let markerOptions = this.get('markerOptions');
         Helpers.initializeMouseEventCallbacks(this);
-        if (marker_options) {
+        if (markerOptions) {
           Helpers.drawAllMarkers(this);
         }
         Helpers.initializeInfowindow(this);

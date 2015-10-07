@@ -22,7 +22,7 @@ Google maps [ember addon](http://www.emberaddons.com/) easy to consume.
 ## Usage
 
 ```hbs
-{{google-maps-addon MapOptions=mapOptions}}
+{{google-maps-addon mapOptions=mapOptions}}
 ```
 
 We have the **JSON** **mapOptions** the powerful way to have your configurations.

@@ -5,11 +5,11 @@ export default Ember.Controller.extend({
       latitude : '12.976299881670053',
       longitude : '80.13112306594849',
       zoom : 7,
-      click : function(rec_event) {
-        console.log('map_click' + rec_event);
+      click : function(recEvent) {
+        console.log('map_click' + recEvent);
       },
-      dblclick : function(rec_event) {
-        console.log('map_double_click' + rec_event);
+      dblclick : function(recEvent) {
+        console.log('map_double_click' + recEvent);
       },
       drag : function() {
         console.log('map_drag');
@@ -20,17 +20,17 @@ export default Ember.Controller.extend({
       dragstart : function() {
         console.log('map_dragstart');
       },
-      mousemove : function(rec_event) {
-        console.log('map_mousemove' + rec_event);
+      mousemove : function(recEvent) {
+        console.log('map_mousemove' + recEvent);
       },
-      mouseout : function(rec_event) {
-        console.log('map_mouseout' + rec_event);
+      mouseout : function(recEvent) {
+        console.log('map_mouseout' + recEvent);
       },
-      mouseover : function(rec_event) {
-        console.log('map_mouseover' + rec_event);
+      mouseover : function(recEvent) {
+        console.log('map_mouseover' + recEvent);
       },
-      rightclick : function(rec_event) {
-        console.log('map_rightclick' + rec_event);
+      rightclick : function(recEvent) {
+        console.log('map_rightclick' + recEvent);
       },
       infowindow : {
         content : '<div>Info Window</div>',
@@ -43,8 +43,8 @@ export default Ember.Controller.extend({
           latitude : '12.976299881670053',
           longitude : '80.13112306594849',
           title : 'first marker',
-          click : function(rec_event) {
-            console.log('Marker_1_click' + rec_event);
+          click : function(recEvent) {
+            console.log('Marker_1_click' + recEvent);
           },
           animation : 'DROP',
           timeout : 2000,
@@ -57,8 +57,8 @@ export default Ember.Controller.extend({
           latitude : '13.976299881670053',
           longitude : '80.13112306594849',
           title : 'first marker',
-          click : function(rec_event) {
-            console.log('Marker_2_Click' + rec_event);
+          click : function(recEvent) {
+            console.log('Marker_2_Click' + recEvent);
           },
           animation : 'BOUNCE',
           timeout : 4000,
