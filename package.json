@@ -1,6 +1,6 @@
 {
   "name": "google-maps-addon",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "description": "Google maps Ember addon easy to consume",
   "directories": {
     "doc": "doc",
@@ -43,6 +43,7 @@
     "ember-cli-babel": "^5.0.0"
   },
   "ember-addon": {
-    "configPath": "tests/dummy/config"
+    "configPath": "tests/dummy/config",
+     "demoURL": "http://samvelraja.github.io/#/demos/googlemaps"
   }
 }

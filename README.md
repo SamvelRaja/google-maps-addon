@@ -94,6 +94,9 @@ mapOptions : {
   'mouseover',
   'rightclick'
 ```
+
+[DEMO](http://samvelraja.github.io/#/demos/googlemaps)
+
 ## Issue and Feature request
 
 Feel free to raise an issue or feature request.
@@ -106,11 +109,6 @@ Feel free to raise an issue or feature request.
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create new Pull Request
-
-## DEMO
-
-![google-maps-addon](https://raw.githubusercontent.com/SamvelRaja/google-maps-addon/master/demo/google-maps-addon.gif)
-
 
 ## Next Planned update,
 
