@@ -94,28 +94,26 @@ export default{
     To draw the `marker` to the `mapElement`
   **/
   drawMarker : function(context, markerOptions) {
-    var mapElement = context.get('mapElement');
+    let mapElement = context.get('mapElement');
     let latitude = markerOptions.latitude || context.get('latitude');
     let longitude = markerOptions.longitude || context.get('longitude');
     let animationIndex = google.maps.Animation[markerOptions.animation] || null;
     let timeout = markerOptions.timeout || 0;
     let image_path = markerOptions.icon || '//mt.googleapis.com/vt/icon/name=icons/spotlight/spotlight-poi.png&scale=1';
     let draggable = markerOptions.draggable || false;
-    var self = this;
-    var myLatlng = new google.maps.LatLng(latitude,longitude);
-    var marker;
+    let myLatlng = new google.maps.LatLng(latitude,longitude);
+    let marker = new google.maps.Marker({
+      position: myLatlng,
+      animation: animationIndex,
+      draggable: draggable,
+      title: markerOptions.title || '',
+      icon : image_path
+    });
+    marker = this.initializeMarkerMouseEventCallbacks(context, marker, markerOptions);
     window.setTimeout(function() {
-      marker = new google.maps.Marker({
-        position: myLatlng,
-        animation: animationIndex,
-        map: mapElement,
-        draggable: draggable,
-        title: markerOptions.title || '',
-        icon : image_path
-      });
-      marker = self.initializeMarkerMouseEventCallbacks(context, marker, markerOptions);
-      return marker;
+      marker.setMap(mapElement);
     }, timeout);
+    return marker;
   },
 
   /**
