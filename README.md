@@ -1,6 +1,6 @@
 # google-maps-addon
 
-[![Build Status](https://travis-ci.org/SamvelRaja/google-maps-addon.svg?branch=master)](https://travis-ci.org/SamvelRaja/google-maps-addon)
+[![Build Status](https://travis-ci.org/SamvelRaja/google-maps-addon.svg?branch=master)](https://travis-ci.org/SamvelRaja/google-maps-addon) [![Dependency Status][david-image]][david-url] [![NPM Version][npm-image]][npm-url]
 
 [![NPM](https://nodei.co/npm/google-maps-addon.png)](https://nodei.co/npm/google-maps-addon/)
 
@@ -119,3 +119,8 @@ Need more interactions back into the component than getting out of component
 # License
 
 google-maps-addon is [MIT Licensed](https://github.com/SamvelRaja/google-maps-addon/blob/master/LICENSE.md).
+
+[npm-url]: https://www.npmjs.com/package/google-maps-addon
+[npm-image]: https://img.shields.io/npm/v/google-maps-addon.svg
+[david-url]: https://david-dm.org/samvelraja/google-maps-addon#info=dependencies
+[david-image]: https://david-dm.org/samvelraja/google-maps-addon.svg
