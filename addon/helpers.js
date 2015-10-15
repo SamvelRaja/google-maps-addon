@@ -24,14 +24,14 @@ export default{
   @usage
     To initialize the `mapOptions` as `context' properties`
   **/
-  initializeOptions : function(context) {
-    let mapOptions = context.get('mapOptions') || context.get('MapOptions');
-    //First preference is to 'markers' array over the 'marker' object
+  initializeOptions: function(context) {
+    let mapOptions = context.get('mapOptions');
+    // First preference is to 'markers' array over the 'marker' object
     let markerOptions =  mapOptions.markers;
     context.setProperties({
-      latitude : mapOptions.latitude || '0',
-      longitude : mapOptions.longitude || '0',
-      zoom : mapOptions.zoom || 8
+      latitude: mapOptions.latitude || '0',
+      longitude: mapOptions.longitude || '0',
+      zoom: mapOptions.zoom || 8
     });
     if ( markerOptions instanceof Array  && !Ember.isEmpty(markerOptions)) {
       context.set('markerOptions', markerOptions);
@@ -45,15 +45,14 @@ export default{
     It creates the map element in the $(div.map-canvas)
   @return map (google map element for other handlings)
   **/
-  createMapElement : function(context) {
+  createMapElement: function(context) {
     let mapOptions = {
       center: new google.maps.LatLng(context.get('latitude'), context.get('longitude')),
       zoom: context.get('zoom'),
       mapTypeId: google.maps.MapTypeId.ROADMAP
     };
     var mapElement = context.$('div.map-canvas')[0];
-    var map = new google.maps.Map(mapElement, mapOptions);
-    return map;
+    return new google.maps.Map(mapElement, mapOptions);
   },
   /**
   @method initializeMouseEventCallbacks
@@ -61,8 +60,8 @@ export default{
   @usage
     To initialize the `mouseevents` to the `mapElement`
   **/
-  initializeMouseEventCallbacks : function(context) {
-    let mapOptions = context.get('mapOptions') || context.get('MapOptions');
+  initializeMouseEventCallbacks: function(context) {
+    let mapOptions = context.get('mapOptions');
     var mapElement = context.get('mapElement');
     mouseEvents.forEach(function(event) {
       if (mapOptions[event]) {
@@ -78,11 +77,11 @@ export default{
   @usage
     To draw the `markers` to the `mapElement`
   **/
-  drawAllMarkers : function(context) {
+  drawAllMarkers: function(context) {
     var markerOptions = context.get('markerOptions');
     var markers = [];
     var self = this;
-    for (let i=0;i<markerOptions.length;i++) {
+    for (let i = 0; i < markerOptions.length; i++) {
       markers[i] = self.drawMarker(context, markerOptions[i]);
     }
     context.set('markers', markers);
@@ -93,7 +92,7 @@ export default{
   @usage
     To draw the `marker` to the `mapElement`
   **/
-  drawMarker : function(context, markerOptions) {
+  drawMarker: function(context, markerOptions) {
     let mapElement = context.get('mapElement');
     let latitude = markerOptions.latitude || context.get('latitude');
     let longitude = markerOptions.longitude || context.get('longitude');
@@ -107,7 +106,7 @@ export default{
       animation: animationIndex,
       draggable: draggable,
       title: markerOptions.title || '',
-      icon : image_path
+      icon: image_path
     });
     marker = this.initializeMarkerMouseEventCallbacks(context, marker, markerOptions);
     window.setTimeout(function() {
@@ -122,7 +121,7 @@ export default{
   @usage
     To initialize the `markermouseevents` to the `marker_obj`
   **/
-  initializeMarkerMouseEventCallbacks : function(context, marker, markerOptions) {
+  initializeMarkerMouseEventCallbacks: function(context, marker, markerOptions) {
     mouseEvents.forEach(function(event) {
       if (markerOptions[event]) {
         if (typeof markerOptions[event] === 'function') {
@@ -138,9 +137,9 @@ export default{
   @usage
     To create and the info window
   **/
-  initializeInfowindow : function(context) {
+  initializeInfowindow: function(context) {
     var mapElement = context.get('mapElement');
-    let mapOptions = context.get('mapOptions') || context.get('MapOptions');
+    let mapOptions = context.get('mapOptions');
     let infoWindowOptions = mapOptions.infowindow;
     if (infoWindowOptions) {
       let longitude = infoWindowOptions.longitude || context.get('longitude');
@@ -149,7 +148,7 @@ export default{
       if (infoWindowOptions instanceof Object && !(infoWindowOptions instanceof Array)) {
         var infoWindow = new google.maps.InfoWindow({
           content: infoWindowOptions.content || 'empty content',
-          position : infoPostion,
+          position: infoPostion,
           pixelOffset: infoWindowOptions.pixelOffset || undefined,
           maxWidth: infoWindowOptions.maxWidth || undefined
         });
@@ -165,11 +164,11 @@ export default{
     To clear All the Markers from the map.
     Have to find a way to hook this function
   **/
-  clearAllMarkers : function(context) {
+  clearAllMarkers: function(context) {
     var markers = context.get('markers');
     if (markers instanceof Array) {
-      for (let i=0;i<markers.length;i++) {
-        markers[i]=this.clearMarker(markers[i]);
+      for (let i = 0; i < markers.length; i++) {
+        markers[i] = this.clearMarker(markers[i]);
       }
     } else {
       markers = this.clearMarker(markers);
@@ -183,7 +182,7 @@ export default{
     To clear the Marker from the map.
     Have to find a way to hook this function
   **/
-  clearMarker : function(marker) {
+  clearMarker: function(marker) {
     marker.setMap(null);
   }
 };
