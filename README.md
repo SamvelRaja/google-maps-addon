@@ -1,8 +1,8 @@
 # google-maps-addon
 
-[![Build Status](https://travis-ci.org/SamvelRaja/google-maps-addon.svg?branch=master)](https://travis-ci.org/SamvelRaja/google-maps-addon) [![Dependency Status][david-image]][david-url] [![NPM Version][npm-image]][npm-url]
+[![Build Status](https://travis-ci.org/SamvelRaja/google-maps-addon.svg?branch=master)](https://travis-ci.org/SamvelRaja/google-maps-addon) [![Dependency Status][david-image]][david-url] [![NPM Version][npm-image]][npm-url] [![Ember Observer Score](http://emberobserver.com/badges/google-maps-addon.svg)](http://emberobserver.com/addons/google-maps-addon)
 
-[![NPM](https://nodei.co/npm/google-maps-addon.png)](https://nodei.co/npm/google-maps-addon/)
+[DEMO](http://samvelraja.github.io/#/demos/googlemaps)
 
 # An Ember Addon
 
@@ -94,8 +94,6 @@ mapOptions : {
   'mouseover',
   'rightclick'
 ```
-
-[DEMO](http://samvelraja.github.io/#/demos/googlemaps)
 
 ## Issue and Feature request
 
