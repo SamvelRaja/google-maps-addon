@@ -2,28 +2,38 @@ import Ember from 'ember';
 import Helpers from '../helpers';
 
 export default Ember.Component.extend({
-  setupMap: Ember.observer('mapOptions', Ember.on('didInsertElement', function() {
-    // Initializing the options into the context
+  setupMap: Ember.on('willInsertElement', function() {
     Helpers.initializeOptions(this);
 
-    // Checking for the availability of googlemaps js the hero
+    // Checking for the availability of Google Maps JavaScript SDK, the hero
     if (window.google) {
-      let mapElement = Helpers.createMapElement(this);
+      this.set('mapElement', Helpers.createMapElement(this));
 
-      // Setting up the mapElement in the context
-      if (mapElement) {
-        this.set('mapElement', mapElement);
-
-        let markerOptions = this.get('markerOptions');
-        Helpers.initializeMouseEventCallbacks(this);
-
-        if (markerOptions) {
-          Helpers.drawAllMarkers(this);
-        }
-        Helpers.initializeInfowindow(this);
-      }
+      this.updateMapOptions();
+      this.updateMarkers();
     } else {
-      console.error('Need to include the googlemaps js');
+      console.error('Please include the Google Maps JavaScript SDK.');
     }
-  }))
+  }),
+
+  updateMapOptionsObserver: Ember.observer('mapOptions', function() {
+    this.updateMapOptions();
+  }),
+
+  updateMarkersObserver: Ember.observer('markerOptions', function() {
+    this.updateMarkers();
+  }),
+
+  updateMapOptions() {
+    if (this.get('mapElement')) {
+      Helpers.initializeMouseEventCallbacks(this);
+      Helpers.initializeInfowindow(this);
+    }
+  },
+
+  updateMarkers() {
+    if (this.get('mapElement')) {
+      Helpers.drawAllMarkers(this);
+    }
+  }
 });

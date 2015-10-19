@@ -17,25 +17,20 @@ let mouseEvents = [
   'rightclick'
 ];
 
-export default{
+export default {
   /**
   @method initializeOptions
   @param context
   @usage
     To initialize the `mapOptions` as `context' properties`
   **/
-  initializeOptions: function(context) {
+  initializeOptions(context) {
     let mapOptions = context.get('mapOptions');
-    // First preference is to 'markers' array over the 'marker' object
-    let markerOptions =  mapOptions.markers;
     context.setProperties({
       latitude: mapOptions.latitude || '0',
       longitude: mapOptions.longitude || '0',
       zoom: mapOptions.zoom || 8
     });
-    if ( markerOptions instanceof Array  && !Ember.isEmpty(markerOptions)) {
-      context.set('markerOptions', markerOptions);
-    }
   },
   /**
   @method createMapElement
@@ -45,7 +40,7 @@ export default{
     It creates the map element in the $(div.map-canvas)
   @return map (google map element for other handlings)
   **/
-  createMapElement: function(context) {
+  createMapElement(context) {
     let mapOptions = {
       center: new google.maps.LatLng(context.get('latitude'), context.get('longitude')),
       zoom: context.get('zoom'),
@@ -60,7 +55,7 @@ export default{
   @usage
     To initialize the `mouseevents` to the `mapElement`
   **/
-  initializeMouseEventCallbacks: function(context) {
+  initializeMouseEventCallbacks(context) {
     let mapOptions = context.get('mapOptions');
     var mapElement = context.get('mapElement');
     mouseEvents.forEach(function(event) {
@@ -77,51 +72,87 @@ export default{
   @usage
     To draw the `markers` to the `mapElement`
   **/
-  drawAllMarkers: function(context) {
+  drawAllMarkers(context) {
     var markerOptions = context.get('markerOptions');
+    markerOptions.forEach((markerOption) => {
+      Ember.assert('A `key` attribute must be provided for all `google-maps-addon` markers', !!markerOption.key);
+    });
+
+    var markerOperations = this.diffMarkers(markerOptions, context.get('markers'));
+
     var markers = [];
-    var self = this;
-    for (let i = 0; i < markerOptions.length; i++) {
-      markers[i] = self.drawMarker(context, markerOptions[i]);
-    }
+
+    // Add new markers
+    console.log('Adding %d markers', markerOperations.added.length);
+    markerOperations.added.forEach((markerOption) => {
+      markers.push(this.drawMarker(context, markerOption));
+    });
+
+    // Updated markers
+    console.log('Updated %d markers', markerOperations.updated.length);
+    markerOperations.updated.forEach((operation) => {
+      markers.push(this.drawMarker(context, operation.markerOption, operation.marker));
+    });
+
+    // Remove old markers
+    console.log('Removed %d markers', markerOperations.removed.length);
+    markerOperations.removed.forEach((operation) => {
+      this.clearMarker(operation.marker);
+    });
+
     context.set('markers', markers);
   },
   /**
   @method drawMarker
-  @param context,markerOptions
+  @param context,markerOptions,marker
   @usage
     To draw the `marker` to the `mapElement`
   **/
-  drawMarker: function(context, markerOptions) {
+  drawMarker(context, markerOptions, marker) {
     let mapElement = context.get('mapElement');
     let latitude = markerOptions.latitude || context.get('latitude');
     let longitude = markerOptions.longitude || context.get('longitude');
     let animationIndex = google.maps.Animation[markerOptions.animation] || null;
     let timeout = markerOptions.timeout || 0;
-    let image_path = markerOptions.icon || '//mt.googleapis.com/vt/icon/name=icons/spotlight/spotlight-poi.png&scale=1';
+    let imagePath = markerOptions.icon || '//mt.googleapis.com/vt/icon/name=icons/spotlight/spotlight-poi.png&scale=1';
     let draggable = markerOptions.draggable || false;
     let myLatlng = new google.maps.LatLng(latitude,longitude);
-    let marker = new google.maps.Marker({
+    if (!marker) {
+      marker = new google.maps.Marker();
+      marker.googleMapsAddonKey = markerOptions.key;
+    }
+    marker = this.initializeMarkerWithOptions(marker, {
       position: myLatlng,
       animation: animationIndex,
       draggable: draggable,
       title: markerOptions.title || '',
-      icon: image_path
+      icon: imagePath
     });
     marker = this.initializeMarkerMouseEventCallbacks(context, marker, markerOptions);
-    window.setTimeout(function() {
+    Ember.run.later(function() {
       marker.setMap(mapElement);
     }, timeout);
     return marker;
   },
-
+  /**
+  @method initializeMarkerWithOptions
+  @param marker,markerOptions
+  @usage
+    To initialize a marker
+  **/
+  initializeMarkerWithOptions(marker, markerOptions) {
+    Object.keys(markerOptions).forEach((key) => {
+      marker[('set ' + key).camelize()].call(marker, markerOptions[key]);
+    });
+    return marker;
+  },
   /**
   @method initializeMarkerMouseEventCallbacks
   @param context,marker,markerOptions
   @usage
     To initialize the `markermouseevents` to the `marker_obj`
   **/
-  initializeMarkerMouseEventCallbacks: function(context, marker, markerOptions) {
+  initializeMarkerMouseEventCallbacks(context, marker, markerOptions) {
     mouseEvents.forEach(function(event) {
       if (markerOptions[event]) {
         if (typeof markerOptions[event] === 'function') {
@@ -137,7 +168,7 @@ export default{
   @usage
     To create and the info window
   **/
-  initializeInfowindow: function(context) {
+  initializeInfowindow(context) {
     var mapElement = context.get('mapElement');
     let mapOptions = context.get('mapOptions');
     let infoWindowOptions = mapOptions.infowindow;
@@ -164,7 +195,7 @@ export default{
     To clear All the Markers from the map.
     Have to find a way to hook this function
   **/
-  clearAllMarkers: function(context) {
+  clearAllMarkers(context) {
     var markers = context.get('markers');
     if (markers instanceof Array) {
       for (let i = 0; i < markers.length; i++) {
@@ -175,6 +206,7 @@ export default{
     }
     context.set('markers', markers);
   },
+
   /**
   @method clearMarker
   @param marker
@@ -182,7 +214,51 @@ export default{
     To clear the Marker from the map.
     Have to find a way to hook this function
   **/
-  clearMarker: function(marker) {
+  clearMarker(marker) {
     marker.setMap(null);
+  },
+
+  /**
+  @method diffMarkers
+  @param markerOptions
+  @param oldMarkers
+  @usage
+    Diff a new set of marker options to and old set of map markers
+  **/
+  diffMarkers(markerOptions, oldMarkers) {
+    var markerOperations = {
+      added: [],
+      removed: [],
+      updated: []
+    };
+
+    // If old markers are present, figure out which are new and old and removed
+    if (oldMarkers) {
+      var oldMarkersByKey = {};
+      oldMarkers.forEach((marker) => {
+        oldMarkersByKey[marker.googleMapsAddonKey] = marker;
+      });
+
+      markerOptions.forEach((markerOption) => {
+        if (oldMarkersByKey[markerOption.key]) {
+          let marker = oldMarkersByKey[markerOption.key];
+          markerOperations.updated.push({ markerOption, marker });
+
+          delete oldMarkersByKey[markerOption.key];
+        } else {
+          markerOperations.added.push(markerOption);
+        }
+      });
+
+      Object.keys(oldMarkersByKey).forEach((key) => {
+        let marker = oldMarkersByKey[key];
+        markerOperations.removed.push({ marker });
+      });
+    // No old markers were present, all are new
+    } else {
+      markerOperations.added = markerOptions;
+    }
+
+    return markerOperations;
   }
 };

@@ -41,6 +41,7 @@ mapOptions : {
   //markers array
   markers : [
     {
+      key : 'A unique value that identifies this marker as an entitiy',
       latitude : 'Your marker latitude if empty will takes up the center latitude',
       longitude : 'Your marker longitude if empty will takes up the center longitude',
       title : 'Your title, if not provided it takes up as empty string',
@@ -55,6 +56,7 @@ mapOptions : {
       }
     },
     {
+      key : 'A unique value that identifies this marker as an entitiy',
       latitude : 'Your marker latitude if empty will takes up the center latitude',
       longitude : 'Your marker longitude if empty will takes up the center longitude',
       title : 'Your title, if not provided it takes up as empty string',
