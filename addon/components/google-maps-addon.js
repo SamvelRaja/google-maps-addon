@@ -1,13 +1,18 @@
 import Ember from 'ember';
-import Helpers from '../helpers';
+import Map from '../map';
 
 export default Ember.Component.extend({
-  setupMap: Ember.on('willInsertElement', function() {
-    Helpers.initializeOptions(this);
+  setupMap: Ember.on('init', function() {
+    this.map = new Map();
+    this.map.set('owner', this);
+  }),
+
+  setupMapElement: Ember.on('willInsertElement', function() {
+    this.map.initializeOptions();
 
     // Checking for the availability of Google Maps JavaScript SDK, the hero
     if (window.google) {
-      this.set('mapElement', Helpers.createMapElement(this));
+      this.set('mapElement', this.map.createMapElement());
 
       this.updateMapOptions();
       this.updateMarkers();
@@ -26,14 +31,14 @@ export default Ember.Component.extend({
 
   updateMapOptions() {
     if (this.get('mapElement')) {
-      Helpers.initializeMouseEventCallbacks(this);
-      Helpers.initializeInfowindow(this);
+      this.map.initializeMouseEventCallbacks();
+      this.map.initializeInfowindow();
     }
   },
 
   updateMarkers() {
     if (this.get('mapElement')) {
-      Helpers.drawAllMarkers(this);
+      this.map.drawAllMarkers();
     }
   }
 });
