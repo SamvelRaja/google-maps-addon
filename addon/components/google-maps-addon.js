@@ -25,7 +25,7 @@ export default Ember.Component.extend({
     this.updateMapOptions();
   }),
 
-  updateMarkersObserver: Ember.observer('markerOptions', function() {
+  updateMarkersObserver: Ember.observer('markers', function() {
     this.updateMarkers();
   }),
 

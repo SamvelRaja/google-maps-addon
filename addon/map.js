@@ -1,12 +1,10 @@
 import Ember from 'ember';
 
-import MarkersMixin from './objects/markers';
-import PolygonsMixin from './objects/polygons';
-import CirclesMixin from './objects/circles';
+import ShapesManager from './mixins/shapes-manager';
 
 import mouseEvents from './mouse-events';
 
-export default Ember.Object.extend(MarkersMixin, PolygonsMixin, CirclesMixin, {
+export default Ember.Object.extend(ShapesManager, {
   /**
   @method initializeOptions
   @usage
@@ -33,8 +31,11 @@ export default Ember.Object.extend(MarkersMixin, PolygonsMixin, CirclesMixin, {
       zoom: this.owner.get('zoom'),
       mapTypeId: google.maps.MapTypeId.ROADMAP
     };
-    var mapElement = this.owner.$('div.map-canvas')[0];
-    return new google.maps.Map(mapElement, mapOptions);
+
+    let mapElement = this.owner.$('div.map-canvas')[0];
+
+    this.set("map", new google.maps.Map(mapElement, mapOptions));
+    return this.get("map");
   },
   /**
   @method initializeMouseEventCallbacks
@@ -75,23 +76,5 @@ export default Ember.Object.extend(MarkersMixin, PolygonsMixin, CirclesMixin, {
         infoWindow.open(mapElement);
       }
     }
-  },
-
-  /**
-  @method clearAllMarkers
-  @usage
-    To clear All the Markers from the map.
-    Have to find a way to hook this function
-  **/
-  clearAllMarkers() {
-    var markers = this.owner.get('markers');
-    if (markers instanceof Array) {
-      for (let i = 0; i < markers.length; i++) {
-        markers[i] = this.clearMarker(markers[i]);
-      }
-    } else {
-      markers = this.clearMarker(markers);
-    }
-    this.owner.set('markers', markers);
   }
 });

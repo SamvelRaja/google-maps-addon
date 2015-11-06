@@ -13,34 +13,46 @@ function diffObjects(newObjects, oldObjects) {
     updated: []
   };
 
+  var objectsLeft = cloneObject(oldObjects);
+
   // If old objects are present, figure out which are new and old and removed
   if (oldObjects) {
-    var oldObjectsByKey = {};
-    oldObjects.forEach((object) => {
-      oldObjectsByKey[object.googleMapsAddonKey] = object;
-    });
-
-    newObjects.forEach((objectOption) => {
-      if (oldObjectsByKey[objectOption.key]) {
-        let object = oldObjectsByKey[objectOption.key];
-        objectOperations.updated.push({ objectOption, object });
-
-        delete oldObjectsByKey[objectOption.key];
+    iterateObject(newObjects, (key, attributes) => {
+      if (oldObjects[key]) {
+        let object = oldObject[key];
+        objectOperations.updated.push({ attributes, object });
       } else {
-        objectOperations.added.push(objectOption);
+        objectOperations.added.push(attributes);
       }
+
+      delete objectsLeft[key];
     });
 
-    Object.keys(oldObjectsByKey).forEach((key) => {
-      let object = oldObjectsByKey[key];
-      objectOperations.removed.push({ object });
+    iterateObject(objectsLeft, (key, object) => {
+      objectOperations.removed.push({ object, key });
     });
   // No old objects were present, all are new
   } else {
-    objectOperations.added = newObjects;
+    iterateObject(objectsLeft, (key, attributes) => {
+      objectOperations.push(attributes)
+    });
   }
 
   return objectOperations;
+}
+
+function iterateObject(object, callback) {
+  Object.keys(object).forEach((key) => {
+    callback(key, object[key]);
+  });
+}
+
+function cloneObject(object) {
+  var cloned = {};
+  iterateObject(object, (key, value) => {
+    cloned[key] = value;
+  });
+  return cloned;
 }
 
 export default diffObjects;
