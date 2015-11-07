@@ -1,6 +1,7 @@
 import Ember from 'ember';
 
 import mouseEvents from '../mouse-events';
+import { diffObjects } from '../helpers/diff-objects-operations';
 
 export default Ember.Object.extend({
   instance: false,
@@ -27,8 +28,17 @@ export default Ember.Object.extend({
 
     this.addEvents();
 
-    let options = Ember.merge(this.defaultOptions(), this.get('options'));
-    this.setAttributes(this.normalizeOptions(options));
+    let mergedOptions = Ember.merge(this.defaultOptions(), this.get('options'));
+    let newOptions = this.normalizeOptions(mergedOptions);
+
+    let oldOptions = this.get('oldOptions');
+    if (oldOptions) {
+      this.setAttributes(diffObjects(newOptions, oldOptions));
+    } else {
+      this.setAttributes(newOptions);
+    }
+
+    this.set('oldOptions', newOptions);
   },
 
   addToMapWithTimeout() {

@@ -11,17 +11,11 @@ export default BaseShape.extend({
 
   defaultOptions() {
     return {
-      icon: DEFAULT_MARKER_IMAGE,
-      draggable: false,
-      title: '',
-      label: '',
-      visible: true
+      icon: DEFAULT_MARKER_IMAGE
     };
   },
 
   normalizeOptions(options) {
-    console.log("Normalize marker");
-
     return {
       position: new google.maps.LatLng(options.latitude, options.longitude),
       animation: google.maps.Animation[options.animation] || null,
@@ -34,7 +28,6 @@ export default BaseShape.extend({
       cursor: options.cursor,
       draggable: options.draggable,
       label: options.label,
-      map: options.map,
       opacity: options.opacity,
       optimized: options.optimized,
       place: options.place,

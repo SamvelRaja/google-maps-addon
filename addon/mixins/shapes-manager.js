@@ -1,6 +1,6 @@
 import Ember from 'ember';
 
-import diffObjects from '../helpers/diff-objects';
+import diffObjectOperations from '../helpers/diff-objects-operations';
 import assertKeyExists from '../helpers/assert-key-exists';
 
 import mouseEvents from '../mouse-events';
@@ -52,7 +52,7 @@ export default Ember.Mixin.create({
 
     let mapElement = this.get('map');
 
-    let shapeOperations = diffObjects(newShapesObject, shapes);
+    let shapeOperations = diffObjectOperations(newShapesObject, shapes);
 
     shapeOperations.added.forEach((attributes) => {
       let shape = new shapeClass;

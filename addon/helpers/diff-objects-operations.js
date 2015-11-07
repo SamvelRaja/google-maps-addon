@@ -1,12 +1,14 @@
-/**
-@method diffMarkers
-@param newObjects
-@param oldObjects
-@usage
-  Diff a new set of objects to and old set of objects. For it to work it assumes that each object has a `googleMapsAddonKey` property set corresponding to a `key` attribute on the new objects.
-**/
+function diffObjects(newObject, oldObject) {
+  var diff = {};
+  iterateObject(newObject, (key, value) => {
+    if (oldObject[key] !== value) {
+      diff[key] = value;
+    }
+  });
+  return diff;
+}
 
-function diffObjects(newObjects, oldObjects) {
+function diffObjectOperations(newObjects, oldObjects) {
   var objectOperations = {
     added: [],
     removed: [],
@@ -55,4 +57,5 @@ function cloneObject(object) {
   return cloned;
 }
 
-export default diffObjects;
+export default diffObjectOperations;
+export { diffObjects };
