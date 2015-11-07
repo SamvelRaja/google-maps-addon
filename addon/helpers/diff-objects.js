@@ -19,7 +19,7 @@ function diffObjects(newObjects, oldObjects) {
   if (oldObjects) {
     iterateObject(newObjects, (key, attributes) => {
       if (oldObjects[key]) {
-        let object = oldObject[key];
+        let object = oldObjects[key];
         objectOperations.updated.push({ attributes, object });
       } else {
         objectOperations.added.push(attributes);

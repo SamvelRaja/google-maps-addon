@@ -5,41 +5,42 @@ import BaseShape from './base';
 const DEFAULT_MARKER_IMAGE = '//mt.googleapis.com/vt/icon/name=icons/spotlight/spotlight-poi.png&scale=1';
 
 export default BaseShape.extend({
-  build(mapElement, options) {
-    let timeout = options.timeout || 0;
-
-    if (!this.marker) {
-      this.marker = new google.maps.Marker();
-      this.marker.googleMapsAddonKey = options.key;
-    }
-
-    Ember.run.later(() => {
-      this.marker.setMap(mapElement);
-    }, timeout);
-
-    return this.marker;
+  createInstance() {
+    return new google.maps.Marker();
   },
 
-  setup(options) {
-    let latitude = options.latitude;
-    let longitude = options.longitude;
-    let animation = google.maps.Animation[options.animation] || null;
-    let imagePath = options.icon || DEFAULT_MARKER_IMAGE;
-    let draggable = options.draggable || false;
-    let myLatlng = new google.maps.LatLng(latitude, longitude);
-
-    this.setAttributes(this.marker, {
-      position: myLatlng,
-      animation: animation,
-      draggable: draggable,
-      title: options.title || '',
-      icon: imagePath
-    });
-
-    this.addEvents(this.marker, options);
+  defaultOptions() {
+    return {
+      icon: DEFAULT_MARKER_IMAGE,
+      draggable: false,
+      title: '',
+      label: '',
+      visible: true
+    };
   },
 
-  remove() {
-    this.marker.setMap(null);
+  normalizeOptions(options) {
+    console.log("Normalize marker");
+
+    return {
+      position: new google.maps.LatLng(options.latitude, options.longitude),
+      animation: google.maps.Animation[options.animation] || null,
+      icon: options.icon,
+      title: options.title,
+      anchorPoint: options.anchorPoint,
+      attribution: options.attribution,
+      clickable: options.clickable,
+      crossOnDrag: options.crossOnDrag,
+      cursor: options.cursor,
+      draggable: options.draggable,
+      label: options.label,
+      map: options.map,
+      opacity: options.opacity,
+      optimized: options.optimized,
+      place: options.place,
+      shape: options.shape,
+      visible: options.visible,
+      zIndex: options.zIndex
+    };
   }
 });

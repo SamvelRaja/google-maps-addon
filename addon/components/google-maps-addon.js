@@ -15,7 +15,7 @@ export default Ember.Component.extend({
       this.set('mapElement', this.map.createMapElement());
 
       this.updateMapOptions();
-      this.updateMarkers();
+      this.updateShapes();
     } else {
       console.error('Please include the Google Maps JavaScript SDK.');
     }
@@ -25,8 +25,8 @@ export default Ember.Component.extend({
     this.updateMapOptions();
   }),
 
-  updateMarkersObserver: Ember.observer('markers', function() {
-    this.updateMarkers();
+  updateShapesObserver: Ember.observer('markers', 'circles', 'rectangles', 'polygons', function() {
+    Ember.run.once(this, "updateShapes");
   }),
 
   updateMapOptions() {
@@ -36,9 +36,9 @@ export default Ember.Component.extend({
     }
   },
 
-  updateMarkers() {
+  updateShapes() {
     if (this.get('mapElement')) {
-      this.map.drawAllMarkers();
+      this.map.drawAllShapes();
     }
   }
 });

@@ -44,7 +44,7 @@ export default Ember.Object.extend(ShapesManager, {
   **/
   initializeMouseEventCallbacks() {
     let mapOptions = this.owner.get('mapOptions');
-    var mapElement = this.owner.get('mapElement');
+    let mapElement = this.owner.get('mapElement');
     mouseEvents.forEach(function(event) {
       if (mapOptions[event]) {
         if (typeof mapOptions[event] === 'function') {
@@ -59,7 +59,7 @@ export default Ember.Object.extend(ShapesManager, {
     To create and the info window
   **/
   initializeInfowindow() {
-    var mapElement = this.owner.get('mapElement');
+    let mapElement = this.owner.get('mapElement');
     let mapOptions = this.owner.get('mapOptions');
     let infoWindowOptions = mapOptions.infowindow;
     if (infoWindowOptions) {
@@ -67,7 +67,7 @@ export default Ember.Object.extend(ShapesManager, {
       let latitude = infoWindowOptions.latitude || this.owner.get('latitude');
       let infoPostion = new google.maps.LatLng(latitude,longitude);
       if (infoWindowOptions instanceof Object && !(infoWindowOptions instanceof Array)) {
-        var infoWindow = new google.maps.InfoWindow({
+        let infoWindow = new google.maps.InfoWindow({
           content: infoWindowOptions.content || 'empty content',
           position: infoPostion,
           pixelOffset: infoWindowOptions.pixelOffset || undefined,

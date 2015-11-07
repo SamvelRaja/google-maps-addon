@@ -6,18 +6,24 @@ import assertKeyExists from '../helpers/assert-key-exists';
 import mouseEvents from '../mouse-events';
 
 import Marker from '../shapes/marker';
+import Circle from '../shapes/circle';
+import Rectangle from '../shapes/rectangle';
+import Polygon from '../shapes/polygon';
 
-const MARKER_CLASS_MAP = {
-  "markers": Marker
+const SHAPE_CLASS_MAP = {
+  "markers": Marker,
+  "circles": Circle,
+  "rectangles": Rectangle,
+  "polygons": Polygon
 };
 
 export default Ember.Mixin.create({
   setupShapes: Ember.on("init", function() {
     this.set("shapes", {
       markers: {},
-      // circles: {},
-      // polygons: {},
-      // rectangles: {}
+      circles: {},
+      polygons: {},
+      rectangles: {}
     });
   }),
 
@@ -29,14 +35,14 @@ export default Ember.Mixin.create({
     });
   },
 
-  drawAllMarkers() {
+  drawAllShapes() {
     this.forEachShapeType((typeName, oldShapes) => {
-      this.drawAllShapes(typeName, oldShapes, MARKER_CLASS_MAP[typeName]);
+      this.drawShapeForType(typeName, oldShapes, SHAPE_CLASS_MAP[typeName]);
     });
   },
 
-  drawAllShapes(typeName, shapes, shapeClass) {
-    let newShapeOptions = this.owner.get(typeName);
+  drawShapeForType(typeName, shapes, shapeClass) {
+    let newShapeOptions = this.owner.get(typeName) || [];
     assertKeyExists(newShapeOptions, typeName);
 
     let newShapesObject = {};
@@ -48,16 +54,20 @@ export default Ember.Mixin.create({
 
     let shapeOperations = diffObjects(newShapesObject, shapes);
 
-    shapeOperations.added.forEach((shapeAttributes) => {
+    shapeOperations.added.forEach((attributes) => {
       let shape = new shapeClass;
-      shape.build(mapElement, shapeAttributes);
-      shape.setup(shapeAttributes);
+      shape.set('options', attributes);
+      shape.set('mapElement', mapElement);
 
-      shapes[shapeAttributes.key] = shape;
+      shape.update();
+      shape.addToMapWithTimeout();
+
+      shapes[attributes.key] = shape;
     });
 
     shapeOperations.updated.forEach((operation) => {
-      operation.object.setup(operation.attributes);
+      operation.object.set('options', operation.attributes);
+      operation.object.update();
     });
 
     shapeOperations.removed.forEach((operation) => {
