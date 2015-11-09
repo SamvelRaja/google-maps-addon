@@ -58,10 +58,13 @@ export default Ember.Object.extend({
 
   addEvents() {
     let options = this.get('options');
+    let instance = this.get('instance');
 
     mouseEvents.forEach((eventName) => {
+      google.maps.event.clearListeners(instance, eventName);
+
       if (typeof options[eventName] === 'function') {
-        google.maps.event.addListener(this.get('instance'), eventName, options[eventName]);
+        google.maps.event.addListener(instance, eventName, options[eventName]);
       }
     });
   },
