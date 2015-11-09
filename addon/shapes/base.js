@@ -21,9 +21,14 @@ export default Ember.Object.extend({
     return options;
   },
 
+  postCreate() {
+    // Override point, optional
+  },
+
   update() {
     if (!this.get('instance')) {
       this.set('instance', this.createInstance());
+      Ember.sendEvent(this, "create");
     }
 
     this.addEvents();
@@ -48,8 +53,7 @@ export default Ember.Object.extend({
   },
 
   setAttributes(attributes) {
-    let instance = this.get('instance');
-    instance.setOptions(attributes);
+    this.get('instance').setOptions(attributes);
   },
 
   addEvents() {

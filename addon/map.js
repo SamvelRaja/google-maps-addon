@@ -52,29 +52,5 @@ export default Ember.Object.extend(ShapesManager, {
         }
       }
     });
-  },
-  /**
-  @method initializeInfowindow
-  @usage
-    To create and the info window
-  **/
-  initializeInfowindow() {
-    let mapElement = this.owner.get('mapElement');
-    let mapOptions = this.owner.get('mapOptions');
-    let infoWindowOptions = mapOptions.infowindow;
-    if (infoWindowOptions) {
-      let longitude = infoWindowOptions.longitude || this.owner.get('longitude');
-      let latitude = infoWindowOptions.latitude || this.owner.get('latitude');
-      let infoPostion = new google.maps.LatLng(latitude,longitude);
-      if (infoWindowOptions instanceof Object && !(infoWindowOptions instanceof Array)) {
-        let infoWindow = new google.maps.InfoWindow({
-          content: infoWindowOptions.content || 'empty content',
-          position: infoPostion,
-          pixelOffset: infoWindowOptions.pixelOffset || undefined,
-          maxWidth: infoWindowOptions.maxWidth || undefined
-        });
-        infoWindow.open(mapElement);
-      }
-    }
   }
 });

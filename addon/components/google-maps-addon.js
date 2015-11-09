@@ -32,7 +32,6 @@ export default Ember.Component.extend({
   updateMapOptions() {
     if (this.get('mapElement')) {
       this.map.initializeMouseEventCallbacks();
-      this.map.initializeInfowindow();
     }
   },
 

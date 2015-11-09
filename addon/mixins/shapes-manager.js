@@ -8,13 +8,13 @@ import mouseEvents from '../mouse-events';
 import Marker from '../shapes/marker';
 import Circle from '../shapes/circle';
 import Rectangle from '../shapes/rectangle';
-import Polygon from '../shapes/polygon';
+import InfoWindow from '../shapes/info-window';
 
 const SHAPE_CLASS_MAP = {
   "markers": Marker,
   "circles": Circle,
   "rectangles": Rectangle,
-  "polygons": Polygon
+  "infoWindows": InfoWindow
 };
 
 export default Ember.Mixin.create({
@@ -22,8 +22,8 @@ export default Ember.Mixin.create({
     this.set("shapes", {
       markers: {},
       circles: {},
-      polygons: {},
-      rectangles: {}
+      rectangles: {},
+      infoWindows: {}
     });
   }),
 
