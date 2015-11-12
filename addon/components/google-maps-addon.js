@@ -7,18 +7,20 @@ export default Ember.Component.extend({
     this.map.set('owner', this);
   }),
 
-  setupMapElement: Ember.on('willInsertElement', function() {
+  setupMapElement: Ember.on('didInsertElement', function() {
     this.map.initializeOptions();
 
     // Checking for the availability of Google Maps JavaScript SDK, the hero
-    if (window.google) {
-      this.set('mapElement', this.map.createMapElement());
+    Ember.run.later(() => {
+      if (window.google) {
+        this.set('mapElement', this.map.createMapElement());
 
-      this.updateMapOptions();
-      this.updateShapes();
-    } else {
-      console.error('Please include the Google Maps JavaScript SDK.');
-    }
+        this.updateMapOptions();
+        this.updateShapes();
+      } else {
+        console.error('Please include the Google Maps JavaScript SDK.');
+      }
+    });
   }),
 
   updateMapOptionsObserver: Ember.observer('mapOptions', function() {
