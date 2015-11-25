@@ -36,7 +36,7 @@ function diffObjectOperations(newObjects, oldObjects) {
   // No old objects were present, all are new
   } else {
     iterateObject(objectsLeft, (key, attributes) => {
-      objectOperations.push(attributes)
+      objectOperations.push(attributes);
     });
   }
 

@@ -1,5 +1,3 @@
-import Ember from 'ember';
-
 import BaseShape from './base';
 
 export default BaseShape.extend({
@@ -31,6 +29,6 @@ export default BaseShape.extend({
       strokeWeight: options.strokeWeight,
       visible: options.visible,
       zIndex: options.zIndex
-    }
+    };
   }
 });

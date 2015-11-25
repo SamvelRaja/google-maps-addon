@@ -3,8 +3,6 @@ import Ember from 'ember';
 import diffObjectOperations from '../helpers/diff-objects-operations';
 import assertKeyExists from '../helpers/assert-key-exists';
 
-import mouseEvents from '../mouse-events';
-
 import Marker from '../shapes/marker';
 import Circle from '../shapes/circle';
 import Rectangle from '../shapes/rectangle';
@@ -41,7 +39,7 @@ export default Ember.Mixin.create({
     });
   },
 
-  drawShapeForType(typeName, shapes, shapeClass) {
+  drawShapeForType(typeName, shapes, ShapeClass) {
     let newShapeOptions = this.owner.get(typeName) || [];
     assertKeyExists(newShapeOptions, typeName);
 
@@ -55,7 +53,7 @@ export default Ember.Mixin.create({
     let shapeOperations = diffObjectOperations(newShapesObject, shapes);
 
     shapeOperations.added.forEach((attributes) => {
-      let shape = new shapeClass;
+      let shape = new ShapeClass();
       shape.set('options', attributes);
       shape.set('mapElement', mapElement);
 

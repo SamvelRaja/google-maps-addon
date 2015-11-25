@@ -1,5 +1,3 @@
-import Ember from 'ember';
-
 import BaseShape from './base';
 
 const DEFAULT_MARKER_IMAGE = '//mt.googleapis.com/vt/icon/name=icons/spotlight/spotlight-poi.png&scale=1';
