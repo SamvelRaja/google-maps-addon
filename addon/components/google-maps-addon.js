@@ -1,29 +1,45 @@
 import Ember from 'ember';
-import Helpers from '../helpers';
+import Map from '../map';
 
 export default Ember.Component.extend({
-  setupMap: Ember.observer('mapOptions', Ember.on('didInsertElement', function() {
-    // Initializing the options into the context
-    Helpers.initializeOptions(this);
+  setupMap: Ember.on('init', function() {
+    this.map = new Map();
+    this.map.set('owner', this);
+  }),
 
-    // Checking for the availability of googlemaps js the hero
-    if (window.google) {
-      let mapElement = Helpers.createMapElement(this);
+  setupMapElement: Ember.on('didInsertElement', function() {
+    this.map.initializeOptions();
 
-      // Setting up the mapElement in the context
-      if (mapElement) {
-        this.set('mapElement', mapElement);
+    // Checking for the availability of Google Maps JavaScript SDK, the hero
+    Ember.run.later(() => {
+      if (window.google) {
+        this.set('mapElement', this.map.createMapElement());
 
-        let markerOptions = this.get('markerOptions');
-        Helpers.initializeMouseEventCallbacks(this);
-
-        if (markerOptions) {
-          Helpers.drawAllMarkers(this);
-        }
-        Helpers.initializeInfowindow(this);
+        this.updateMapOptions();
+        this.updateShapes();
+      } else {
+        console.error('Please include the Google Maps JavaScript SDK.');
       }
-    } else {
-      console.error('Need to include the googlemaps js');
+    });
+  }),
+
+  updateMapOptionsObserver: Ember.observer('mapOptions', function() {
+    this.updateMapOptions();
+  }),
+
+  updateShapesObserver: Ember.observer('markers', 'circles', 'rectangles', 'polygons', function() {
+    Ember.run.once(this, "updateShapes");
+  }),
+
+  updateMapOptions() {
+    if (this.get('mapElement')) {
+      this.map.initializeMouseEventCallbacks();
     }
-  }))
+  },
+
+  updateShapes() {
+    if (this.get('mapElement')) {
+      this.map.drawAllShapes();
+    }
+  }
 });
