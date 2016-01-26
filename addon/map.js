@@ -2,7 +2,7 @@ import Ember from 'ember';
 
 import ShapesManager from './mixins/shapes-manager';
 
-import mouseEvents from './mouse-events';
+import events from './events';
 
 export default Ember.Object.extend(ShapesManager, {
   /**
@@ -45,11 +45,9 @@ export default Ember.Object.extend(ShapesManager, {
   initializeMouseEventCallbacks() {
     let mapOptions = this.owner.get('mapOptions');
     let mapElement = this.owner.get('mapElement');
-    mouseEvents.forEach(function(event) {
-      if (mapOptions[event]) {
-        if (typeof mapOptions[event] === 'function') {
-          google.maps.event.addListener(mapElement, event, mapOptions[event]);
-        }
+    events.forEach(function(event) {
+      if (typeof mapOptions[event] === 'function') {
+        google.maps.event.addListener(mapElement, event, mapOptions[event]);
       }
     });
   }

@@ -1,6 +1,6 @@
 import Ember from 'ember';
 
-import mouseEvents from '../mouse-events';
+import events from '../events';
 import { diffObjects } from '../helpers/diff-objects-operations';
 
 export default Ember.Object.extend({
@@ -60,7 +60,7 @@ export default Ember.Object.extend({
     let options = this.get('options');
     let instance = this.get('instance');
 
-    mouseEvents.forEach((eventName) => {
+    events.forEach((eventName) => {
       google.maps.event.clearListeners(instance, eventName);
 
       if (typeof options[eventName] === 'function') {
