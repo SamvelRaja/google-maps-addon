@@ -26,11 +26,14 @@ export default Ember.Object.extend(ShapesManager, {
   @return map (google map element for other handlings)
   **/
   createMapElement() {
-    let mapOptions = {
+    const providedOptions = this.owner.get('mapOptions');
+    const defaultOptions = {
       center: new google.maps.LatLng(this.owner.get('latitude'), this.owner.get('longitude')),
       zoom: this.owner.get('zoom'),
       mapTypeId: google.maps.MapTypeId.ROADMAP
     };
+
+    const mapOptions = Ember.merge(defaultOptions, providedOptions);
 
     let mapElement = this.owner.$('div.map-canvas')[0];
 
