@@ -9,7 +9,8 @@ export default BaseShape.extend({
 
   defaultOptions() {
     return {
-      icon: DEFAULT_MARKER_IMAGE
+      icon: DEFAULT_MARKER_IMAGE,
+      clickable: true
     };
   },
 

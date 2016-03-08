@@ -11,7 +11,8 @@ export default BaseShape.extend({
       fillOpacity: 0.5,
       strokeColor: 'red',
       strokeWeight: 2,
-      strokeOpacity: 0.6
+      strokeOpacity: 0.6,
+      clickable: true
     };
   },
 
