@@ -14,6 +14,7 @@ export default BaseShape.extend({
       strokeOpacity: 0.6,
       draggable: false,
       editable: false,
+      clickable: true,
       visible: true,
       zIndex: null
     };
@@ -31,7 +32,8 @@ export default BaseShape.extend({
       draggable: options.draggable,
       editable: options.editable,
       visible: options.visible,
-      zIndex: options.zIndex
+      zIndex: options.zIndex,
+      clickable: options.clickable
     };
   }
 });

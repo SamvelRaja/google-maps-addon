@@ -8,7 +8,9 @@ export default BaseShape.extend({
   },
 
   defaultOptions() {
-    return {};
+    return {
+      clickable: true
+    };
   },
 
   normalizeOptions(options) {
@@ -16,7 +18,8 @@ export default BaseShape.extend({
       content: options.content,
       position: new google.maps.LatLng(options.latitude, options.longitude),
       pixelOffset: options.pixelOffset,
-      maxWidth: options.maxWidth
+      maxWidth: options.maxWidth,
+      clickable: options.clickable
     };
   },
 
