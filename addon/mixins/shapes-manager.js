@@ -7,12 +7,14 @@ import Marker from '../shapes/marker';
 import Circle from '../shapes/circle';
 import Rectangle from '../shapes/rectangle';
 import InfoWindow from '../shapes/info-window';
+import Polygon from '../shapes/polygon';
 
 const SHAPE_CLASS_MAP = {
   "markers": Marker,
   "circles": Circle,
   "rectangles": Rectangle,
-  "infoWindows": InfoWindow
+  "infoWindows": InfoWindow,
+  "polygons": Polygon
 };
 
 export default Ember.Mixin.create({
@@ -21,7 +23,8 @@ export default Ember.Mixin.create({
       markers: {},
       circles: {},
       rectangles: {},
-      infoWindows: {}
+      infoWindows: {},
+      polygons: {}
     });
   }),
 
