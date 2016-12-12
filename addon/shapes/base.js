@@ -48,7 +48,9 @@ export default Ember.Object.extend({
 
   addToMapWithTimeout() {
     Ember.run.later(() => {
-      this.get('instance').setMap(this.get('mapElement'));
+      if (!this.get('isDestroyed')) {
+        this.get('instance').setMap(this.get('mapElement'));
+      }
     }, this.get('options.timeout') || null);
   },
 
@@ -70,6 +72,7 @@ export default Ember.Object.extend({
   },
 
   remove() {
+    this.destroy();
     this.get('instance').setMap(null);
   }
 });
