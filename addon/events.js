@@ -16,6 +16,7 @@ const EVENTS = [
   'rightclick',
   'bounds_changed',
   'center_changed',
+  'radius_changed',
   'heading_changed',
   'idle',
   'maptypeid_changed',
