@@ -17,6 +17,9 @@
   },
   "author": "SamvelRaja",
   "license": "MIT",
+  "dependencies": {
+    "ember-cli-babel": "^5.1.7"
+  },
   "devDependencies": {
     "broccoli-asset-rev": "^2.2.0",
     "ember-ajax": "0.7.1",
